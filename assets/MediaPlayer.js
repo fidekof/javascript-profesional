@@ -5,15 +5,26 @@ function MediaPlayer(config) {
   this._initPlugins();
 }
 
-MediaPlayer.prototype._initPlugins = function() {
-  this.plugins.forEach(plugin => {
-    plugin.run(this);
-  });
-};
-
 MediaPlayer.prototype.play = function() {
   this.media.play();
 };
+
+
+MediaPlayer.prototype._initPlugins = function() {
+  const player = {
+    play: () => this.play(),
+    pause: () => this.pause(),
+    media: this.media,
+    get muted(){return this.media.muted},
+    set muted(val){this.media.muted = val;}
+  };
+
+  this.plugins.forEach(plugin => {
+    plugin.run(player);
+  });
+};
+
+
 
 MediaPlayer.prototype.pause = function() {
   this.media.pause();

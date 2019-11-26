@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Proxy</title>
+    <script src="https://unpkg.com/fast-levenshtein@2.0.6/levenshtein.js"></script>
+    <script>
+        const target = {
+            red: 'rojo',
+            green: 'verde',
+            blue: 'azul'
+        };
+
+        const handler = {
+            get(obj,prop){
+                if(prop in obj)
+                {
+                    return obj[prop];
+                }
+
+                const suggestion = Object.keys(target).find(key =>{
+                    return Levenshtein.get(key, prop) <= 3;
+                });
+
+                if(suggestion){console.log(`${prop} no se encontro Quiso decir ${suggestion}`);}
+
+                return obj[prop];
+            },
+
+            set(obj,prop,value){
+                if(prop in obj)
+                {
+                    console.log(`Usted quiere reemplazar el valor: ${obj[prop]} por este valor: ${value}`);
+                    obj[prop] = value;
+                }
+                else{
+                    console.log(`Usted quiere crear la propiedad: ${prop} con el valor: ${value}`);
+                }
+            }
+        }
+
+        const p = new Proxy(target, handler);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

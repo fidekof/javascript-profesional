@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Generadores</title>
+</head>
+<body>
+<script>
+
+    // generadores
+    function* simpleGenerator() {
+        console.log('gen start');
+        yield;
+        console.log('gen end');
+    };
+    const gen  = simpleGenerator();
+
+
+    // Generador Infinitos
+    function* infiniteGen() {
+        let id = 1;
+        while (true){yield id; id ++;}
+    }
+
+    const ifgen = infiniteGen();
+
+
+    // Generadores con parametros
+    function* genReset() {
+        let id = 1;
+        let reset;
+        while (true){
+            reset = yield id;
+            if(reset) id = 1;
+            else
+            id ++;
+        }
+    }
+
+    const genreset = genReset();
+
+    function* genfibo() {
+        let a = 0;
+        let b = 1;
+        while (true){
+            yield a + b;
+            a = b;
+            b++;
+        }
+    }
+
+    const gfibo = genfibo();
+
+</script>
+</body>
+</html>

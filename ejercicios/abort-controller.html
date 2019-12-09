@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *,:root, :before, :after
+        {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #container{
+            background-color: #888888;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #button-container
+        {
+            background-color: #777777;
+            width: 95%;
+            height: 10%;
+            margin: 1rem;
+            border-radius: 50px;
+            box-shadow: 5px 5px 10px  #030303 inset;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #img-container
+        {
+            background-color: #777777;
+            width: 95%;
+            height: 85%;
+            border-radius: 50px;
+            box-shadow: 5px 5px 10px  #030303 inset;
+        }
+
+        #button-container > button
+        {
+            border: none;
+            padding: 1rem 2rem;
+            margin-left: 1rem;
+            border-radius: 2rem;
+            box-shadow: 5px 5px 10px -3px #222222;
+        }
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="button-container">
+        <button id="b-start">Start</button>
+        <button id="b-stop">Stop</button>
+    </div>
+    <div id="img-container">
+
+    </div>
+</div>
+
+<script>
+    const imgurl = "https://images.unsplash.com/photo-1508030592112-5b1661446db8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1900&q=80" ;
+    const img = document.querySelector("#img-container");
+    const loadB = document.getElementById("b-start");
+    const stopB = document.getElementById("b-stop");
+    let controller;
+    const startLoad = () => {
+        loadB.disabled = true;
+        loadB.innerText = "Loading...";
+        stopB.disabled = false;
+    };
+
+
+    const stopLoad = () => {
+        stopB.disabled = true;
+        loadB.innerText = "Stoping...";
+        loadB.disabled = false;
+        loadB.innerText = "Load";
+        stopB.innerText = "Stop";
+        img.style.backgroundImage = 'none';
+    };
+
+    loadB.onclick = async function() {
+        startLoad();
+        controller =  new AbortController();
+
+        try {
+            const response = await fetch(URL, {signal: controller.signal});
+            const blobimg =  await  response.blob();
+            const imgBlobUrl = URL.createObjectURL(blobimg);
+            img.style.backgroundImage = `url(${imgurl})`;
+            img.style.backgroundSize = 'cover';
+            img.style.backgroundRepeat = 'no-repeat';
+            loadB.innerText = "Loaded ☺"
+        }
+        catch (e) {
+            console.log(e.message)
+        }
+    };
+
+    stopB.onclick = function () {
+        controller.abort();
+        stopLoad();
+    }
+
+</script>
+</body>
+</html>

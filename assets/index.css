@@ -36,3 +36,38 @@ main {
 .movie {
   width: 100%;
 }
+
+.section-comments > h3
+{
+  padding: 3rem 0;
+}
+
+.section-comments{
+  background-color: #333;
+  color: #999999;
+  padding-left: 2rem;
+}
+
+.article-commet{
+  max-width: 95%;
+  border-bottom: 1px dotted whitesmoke ;
+  background-color: #222222;
+  padding: 1rem;
+}
+
+button{
+  background-color: darkgrey;
+  border-radius: 2rem;
+  margin-top: 1rem;
+  margin-left: 3rem;
+  border: none;
+  padding: 1em 2em;
+  margin-left: auto ;
+  box-shadow: 5px 5px 8px -3px darkgray;
+}
+
+.movie{
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px -5px darkgrey inset;
+}
+
